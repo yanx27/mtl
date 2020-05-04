@@ -74,14 +74,14 @@ The decoders consisets of three convolution layers:
 
 ## Losses
 ### Specific losses
-1. Semantic segmantation loss (<img src='images/l_label.PNG' height="20px">): Cross entropy on softMax per pixel (only on valid pixels).
-2. Instance segmantation loss (<img src='images/l_instance.PNG' height="20px">): Centroid regression using masked L1. For each instance in the GT we calculate a mask of valid pixels and for each pixel in the mask the length (in pixels) from the mask center (for x and for y) - this will be used as the instance segmantation GT. Then for all valid pixels we calculate L1 between the network output and the instance segmantation GT.
-3. Depth estimation loss (<img src='images/l_disp.PNG' height="20px">): L1 (only on valid pixels).
+1. Semantic segmantation loss (![](images/l_label.png)): Cross entropy on softMax per pixel (only on valid pixels).
+2. Instance segmantation loss (![](images/l_instance.png)): Centroid regression using masked L1. For each instance in the GT we calculate a mask of valid pixels and for each pixel in the mask the length (in pixels) from the mask center (for x and for y) - this will be used as the instance segmantation GT. Then for all valid pixels we calculate L1 between the network output and the instance segmantation GT.
+3. Depth estimation loss (![](images/l_disp.png)): L1 (only on valid pixels).
 
 ### Multi loss
 ![](images/multi_loss.PNG)<br>
 
-Notice that: ![](images/sigmas.PNG)<br> are learnable.
+Notice that: ![](images/sigmas.PNG) are learnable.
 
 
 ## Instance segmantation explained
@@ -97,23 +97,21 @@ The instance segmantation decoder produces two channels so that each pixel is a 
 ### Examples
 |        Input        | Label <br>segmentation  |Instance <br>segmentation|       Depth         |
 |:-------------------:|:-------------------:|:-------------------:|:-------------------:|
-|![width="200px"](images/Pedestrian_crossing_0.PNG)|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_0.png' width="200px">|
-|![width="200px"](images/Pedestrian_crossing_1.PNG)|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_1.png' width="200px">|
-|<img width="200px" src='inputs/bicycle_0.png'>|<img src='results/resNet_label_instance_disp/label_bicycle_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bicycle_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bicycle_0.png' width="200px">|
-|<img width="200px" src='inputs/bicycle_1.png'>|<img src='results/resNet_label_instance_disp/label_bicycle_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bicycle_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bicycle_1.png' width="200px">|
-|<img width="200px" src='inputs/bus_0.png'>|<img src='results/resNet_label_instance_disp/label_bus_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bus_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bus_0.png' width="200px">|
-|<img width="200px" src='inputs/bus_1.png'>|<img src='results/resNet_label_instance_disp/label_bus_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bus_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bus_1.png' width="200px">|
-|<img width="200px" src='inputs/parking_0.png'>|<img src='results/resNet_label_instance_disp/label_parking_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_parking_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_parking_0.png' width="200px">|
-|<img width="200px" src='inputs/parking_1.png'>|<img src='results/resNet_label_instance_disp/label_parking_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_parking_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_parking_1.png' width="200px">|
-|<img width="200px" src='inputs/truck_0.png'>|<img src='results/resNet_label_instance_disp/label_truck_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_truck_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_truck_0.png' width="200px">|
-|<img width="200px" src='inputs/truck_1.png'>|<img src='results/resNet_label_instance_disp/label_truck_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_truck_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_truck_1.png' width="200px">|
+|![width="200px"](inputs/bicycle_0.PNG)|![width="200px"](results/resNet_label_instance_disp/label_bicycle_0.png)|![width="200px"](results/resNet_label_instance_disp/instance_bicycle_0.png)|![width="200px"](results/resNet_label_instance_disp/disp_bicycle_0.png)|
+|![width="200px"](inputs/bicycle_1.PNG)|![width="200px"](results/resNet_label_instance_disp/label_bicycle_1.png)|![width="200px"](results/resNet_label_instance_disp/instance_bicycle_1.png)|![width="200px"](results/resNet_label_instance_disp/disp_bicycle_1.png)|
+|![width="200px"](inputs/bus_0.png)|![width="200px"](results/resNet_label_instance_disp/label_bus_0.png)|![width="200px"](results/resNet_label_instance_disp/instance_bus_0.png)|![width="200px"](results/resNet_label_instance_disp/disp_bus_0.png)|
+|![width="200px"](inputs/bus_1.png)|![width="200px"](results/resNet_label_instance_disp/label_bus_1.png)|![width="200px"](results/resNet_label_instance_disp/instance_bus_1.png)|![width="200px"](results/resNet_label_instance_disp/disp_bus_1.png)|
+|![width="200px"](inputs/parking_0.png)|![width="200px"](results/resNet_label_instance_disp/label_parking_0.png)|![width="200px"](results/resNet_label_instance_disp/instance_parking_0.png)|![width="200px"](results/resNet_label_instance_disp/disp_parking_0.png)|
+|![width="200px"](inputs/parking_1.png)|![width="200px"](results/resNet_label_instance_disp/label_parking_1.png)|![width="200px"](results/resNet_label_instance_disp/instance_parking_1.png)|![width="200px"](results/resNet_label_instance_disp/disp_parking_1.png)|
+|![width="200px"](inputs/truck_0.png)|![width="200px"](results/resNet_label_instance_disp/label_truck_0.png)|![width="200px"](results/resNet_label_instance_disp/instance_truck_0.png)|![width="200px"](results/resNet_label_instance_disp/disp_truck_0.png)|
+|![width="200px"](inputs/truck_1.png)|![width="200px"](results/resNet_label_instance_disp/label_truck_1.png)|![width="200px"](results/resNet_label_instance_disp/instance_truck_1.png)|![width="200px"](results/resNet_label_instance_disp/disp_truck_1.png)|
 
 ### Single vs. Dual vs. All
 **Task quantitative result per epoch**<br>
 
 |Label segmentation   |Instance segmentation|       Depth         |
 |:-------------------:|:-------------------:|:-------------------:|
-|<img src='images/graphs/label.png' width="280px">|<img src='images/graphs/instance.png' width="280px">|<img src='images/graphs/disp.png' width="280px">|
+|![width="280px"](images/graphs/label.PNG)|![width="280px"](images/graphs/instance.PNG)|![width="280px"](images/graphs/disp.PNG)|
 
 
 **Comparison to paper quantitative results** <br>
