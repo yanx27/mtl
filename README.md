@@ -9,29 +9,31 @@ Numerous deep learning applications benefit from multi-task learning with multip
 
 ##  Multi Task Learning with Homoscedastic Uncertainty
 The naive approach to combining multi objective losses would be to simply perform a weighted linear sum of the losses for each individual task:<br>
-<img src='images/naive_loss.PNG'><br>
+![](images/naive_loss.PNG)<br>
 
 The paper suggest that using Homoscedastic uncertainty can be used as a basis for weighting losses in a multi-task learning problem and produce supirior results then the naive approach.
 
 ### Mathematical Formulation
 First the paper defines multi-task likelihoods:<br>
 - For regression tasks, likelihood is defined as a Gaussian with mean given by the model output with an observation noise scalar σ:<br>
-<img src='images/reg_likelihood.PNG'><br>
+![](images/reg_likelihood.PNG)<br>
 - For classification, likelihood is defined as:<br>
-<img src='images/class_likelihood_1.PNG'><br>
+![](images/class_likelihood_1.PNG)<br>
+
 where:<br>
-<img src='images/class_likelihood_0.PNG'><br>
+![](images/class_likelihood_0.PNG)<br>
 
 In maximum likelihood inference, we maximise the log likelihood of the model. In regression for example:<br>
-<img src='images/reg_loglikelihood.PNG'><br>
+![](images/reg_loglikelihood.PNG)<br>
 σ is the model’s observation noise parameter - capturing how much noise we have in the outputs. We then
 maximise the log likelihood with respect to the model parameters W and observation noise parameter σ.<br>
 
 Assuming two tasks that follow a Gaussian distributions:<br>
-<img src='images/two_task.PNG'><br>
+![](images/two_task.PNG)<br>
+
 The loss will be:<br>
-<img src='images/total_loss_h.PNG'><br>
-<img src='images/loss7.PNG'><br>
+![](images/total_loss_h.PNG)<br>
+![](images/loss7.PNG)<br>
 This means that W and σ are the learned parameters of the network. W are the wights of the network while σ are used to calculate the wights of each task loss and also to regularize this task loss wight.
 
 
@@ -41,22 +43,19 @@ The network consisets of an encoder which produce a shared representation and  f
 1. Semantic segmantation Decoder.
 2. Instance segmantation Decoder.
 3. Depth estimation Decoder.
-
-<img src='images/arc_top.png'>
+![](images/arc_top.png)<br>
 
 ### Encoder
 The encoder consisets of a fine tuned pre-trained ResNet 101 v1 with the following chnges:
 1. Droped the final fully conected layer.
 2. Last layer is resized to 128X256.
 3. used Dilated convolutional approch (atrous convolution).
-
-<img src='images/resnet.png'>
+![](images/resnet.png)<br>
 
 ### Atrous convolution
 Given an image, we assume that we first have a downsampling operation that reduces the resolution by a factor of 2, and then perform a convolution with a kernel (in the example beneath: the vertical Gaussian derivative). If one implants the resulting feature map in the original image coordinates, we realize that we have obtained responses at only 1/4 of the image positions. Instead, we can compute responses at all image positions if we convolve the full resolution image with a filter ‘with holes’, in which we upsample the original filter by a factor of 2, and introduce zeros in between filter values. Although the effective filter size increases, we only need to take into account the non-zero filter values, hence both the number of filter parameters and the number of operations per position stay constant. The resulting scheme allows us to easily and explicitly control the spatial resolution of neural network feature responses.
 
-
-<img src='images/atrous_convolution.png'>
+![](images/atrous_convolution.png)<br>
 
 ### Decoders
 The decoders consisets of three convolution layers:
@@ -65,13 +64,13 @@ The decoders consisets of three convolution layers:
 3. 1X1 Conv + ReLU (as many kernels as needed for the task).
 
 **Semantic segmantation Decoder:** last layer 34 channels.<br>
-<img src='images/semantic_segmantation.png' height="100px">
+![](images/semantic_segmantation.png)<br>
 
 **Instance segmantation Decoder:** last layer 2 channels.<br>
-<img src='images/instance_segmantation.png' height="100px">
+![](images/instance_segmantation.png)<br>
 
 **Depth estimation Decoder:** last layer 1 channel.<br>
-<img src='images/depth_estimation.png' height="100px">
+![](images/depth_estimation.png)<br>
 
 ## Losses
 ### Specific losses
@@ -80,14 +79,14 @@ The decoders consisets of three convolution layers:
 3. Depth estimation loss (<img src='images/l_disp.PNG' height="20px">): L1 (only on valid pixels).
 
 ### Multi loss
-<img src='images/multi_loss.PNG'>
+![](images/multi_loss.PNG)<br>
 
-Notice that: <img src='images/sigmas.PNG' height="20px"> are learnable.
+Notice that: ![](images/sigmas.PNG)<br> are learnable.
+
 
 ## Instance segmantation explained
 The instance segmantation decoder produces two channels so that each pixel is a vector pointing to the instance center. Using the semantic segmantation result we calculate a mask for to calculate the instance segmantation valid pixels. Then we combine the mask and the vectors calculated by the instance segmantation decoder and using the OPTICS clustering algorithem we cluster the vectors to diffrent instances. OPTICS is an efficient density based clustering algorithm. It is able to identify an unknown number of multi-scale clusters with varying density from a given set of samples. OPICS is used for two reasons. It does not assume knowledge of the number of clusters like algorithms such as k-means. Secondly, it does not assume a canonical instance size or density like discretised binning approaches.
-
-<img src='images/instance_pipline_legand2.png'>
+![](images/instance_pipline_legand2.PNG)<br>
 
 
 
@@ -98,8 +97,8 @@ The instance segmantation decoder produces two channels so that each pixel is a 
 ### Examples
 |        Input        | Label <br>segmentation  |Instance <br>segmentation|       Depth         |
 |:-------------------:|:-------------------:|:-------------------:|:-------------------:|
-|<img width="200px" src='inputs/Pedestrian_crossing_0.png'>|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_0.png' width="200px">|
-|<img width="200px" src='inputs/Pedestrian_crossing_1.png'>|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_1.png' width="200px">|
+|![width="200px"](images/Pedestrian_crossing_0.PNG)|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_0.png' width="200px">|
+|![width="200px"](images/Pedestrian_crossing_1.PNG)|<img src='results/resNet_label_instance_disp/label_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_Pedestrian_crossing_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_Pedestrian_crossing_1.png' width="200px">|
 |<img width="200px" src='inputs/bicycle_0.png'>|<img src='results/resNet_label_instance_disp/label_bicycle_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bicycle_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bicycle_0.png' width="200px">|
 |<img width="200px" src='inputs/bicycle_1.png'>|<img src='results/resNet_label_instance_disp/label_bicycle_1.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bicycle_1.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bicycle_1.png' width="200px">|
 |<img width="200px" src='inputs/bus_0.png'>|<img src='results/resNet_label_instance_disp/label_bus_0.png' width="200px">|<img src='results/resNet_label_instance_disp/instance_bus_0.png' width="200px">|<img src='results/resNet_label_instance_disp/disp_bus_0.png' width="200px">|
@@ -115,6 +114,7 @@ The instance segmantation decoder produces two channels so that each pixel is a 
 |Label segmentation   |Instance segmentation|       Depth         |
 |:-------------------:|:-------------------:|:-------------------:|
 |<img src='images/graphs/label.png' width="280px">|<img src='images/graphs/instance.png' width="280px">|<img src='images/graphs/disp.png' width="280px">|
+
 
 **Comparison to paper quantitative results** <br>
 
